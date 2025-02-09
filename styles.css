@@ -241,43 +241,114 @@ nav:hover .nav-links a span {
 
 @media (max-width: 768px) {
     nav {
-        bottom: 0;
-        top: auto;
+        position: fixed;
+        top: 0;
+        left: -100%;
         width: 100%;
-        height: 60px;
-        flex-direction: row;
-        padding: 0;
-        background: rgba(10, 12, 18, 0.1);
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(2px);
+        height: 100vh;
+        background: #0a0c12;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        transition: left 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        border: none;
     }
 
-    nav:hover {
-        width: 100%;
+    nav.active {
+        left: 0;
     }
 
     .nav-links {
-        flex-direction: row;
-        justify-content: space-around;
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        opacity: 1;
     }
 
     .nav-links a {
-        padding: 10px;
+        font-size: 1.2em;
+        padding: 15px 25px;
+        width: 200px;
+        text-align: center;
+        background: transparent;
+        border: 1px solid var(--neon-blue);
+        border-radius: 8px;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+    }
+
+    .nav-links a i {
+        font-size: 1.1em;
+        min-width: auto;
     }
 
     .nav-links a span {
+        opacity: 1;
+        transform: none;
+    }
+
+    .logo {
         display: none;
     }
 
-    .content-container {
-        margin-left: 0;
-        width: 100%;
-        padding-bottom: 60px;
+    section {
+        padding: 40px 20px;
+        margin: 20px auto;
+        border-radius: 15px;
     }
 
-    nav:hover + .content-container {
-        margin-left: 0;
-        width: 100%;
+    .hero {
+        padding: 20px;
+        min-height: 80vh;
+    }
+
+    .project-grid,
+    .research-grid,
+    .tool-grid,
+    .cert-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .skill-items {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .skill-items span {
+        padding: 8px 12px;
+        font-size: 0.85em;
+        text-align: center;
+    }
+
+    .content-container {
+        padding-bottom: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 2rem 1rem;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    .about-content,
+    .contact-content {
+        padding: 0 10px;
     }
 }
 
@@ -300,7 +371,7 @@ section {
 /* Hero section styles */
 .hero {
     max-width: 100%;
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     position: relative;
     display: flex;
@@ -311,6 +382,8 @@ section {
     margin: 0;
     padding: 0;
     top: 0;
+    left: 0;
+    right: 0;
 }
 
 /* Binary background styles */
@@ -357,6 +430,12 @@ section {
     z-index: 2;
     padding: 4rem;
     text-align: center;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Typing animation styles */
@@ -369,21 +448,78 @@ section {
     text-transform: none;
     letter-spacing: -1px;
     margin-bottom: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 4px solid var(--neon-blue);
-    animation: typing 3.5s steps(30, end), 
-               blink-caret 0.75s step-end infinite;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
 }
 
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Remove these animations as they're no longer needed */
 @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
+    display: none;
 }
 
 @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: var(--neon-blue) }
+    display: none;
+}
+
+/* Update mobile styles for hero title */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+        padding: 0 15px;
+        white-space: normal;
+        line-height: 1.2;
+        width: 100%;
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        -ms-word-break: break-all;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+
+    .typewriter {
+        font-size: 1em;
+        padding: 0 20px;
+        line-height: 1.4;
+        white-space: normal;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .hero {
+        min-height: 100vh;
+        height: 100vh;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Add smaller breakpoint for very small devices */
+@media (max-width: 380px) {
+    .hero-title {
+        font-size: 2em;
+    }
+
+    .typewriter {
+        font-size: 0.9em;
+    }
 }
 
 /* Remove glitch effect styles */
@@ -716,21 +852,24 @@ html {
 
 .tool-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 15px;
     margin-top: 1rem;
     max-width: 1200px;
     margin: 30px auto;
+    padding: 0 15px;
 }
 
 .tool-item {
     background: rgba(0, 243, 255, 0.05);
-    padding: 10px;
+    padding: 12px;
     border-radius: 8px;
     text-align: center;
     transition: all 0.3s ease;
     border: 1px solid rgba(0, 243, 255, 0.1);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    word-break: break-word;
+    hyphens: auto;
 }
 
 .tool-item:hover {
@@ -878,6 +1017,17 @@ h2, h3 {
     .research-grid,
     .blog-grid {
         grid-template-columns: 1fr;
+    }
+
+    .tool-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 0 10px;
+    }
+
+    .tool-item {
+        padding: 10px;
+        font-size: 0.9em;
     }
 }
 
@@ -1039,6 +1189,7 @@ section::after {
 .content-container {
     margin-top: 0;
     padding-top: 0;
+    transition: margin-left 0.3s ease;
 }
 
 /* Update cursor styles with trail effect */
@@ -1133,4 +1284,374 @@ section::after {
 .contact-info p {
     margin: 10px 0;
     text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+/* Add hamburger menu styles */
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: var(--neon-blue);
+    margin: 5px 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 243, 255, 0.5);
+}
+
+/* Mobile navigation styles */
+@media (max-width: 768px) {
+    /* Hero title improvements */
+    .hero-content {
+        padding: 2rem 1rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: min(8vw, 2.5em); /* Responsive font size */
+        line-height: 1.1;
+        margin-bottom: 20px;
+        padding: 0 15px;
+        white-space: normal;
+        max-width: 100%;
+        letter-spacing: -0.5px;
+        /* Prevent awkward breaks */
+        display: inline-block;
+        width: auto;
+    }
+
+    .typewriter {
+        font-size: min(4vw, 1em);
+        max-width: 90%;
+        line-height: 1.4;
+        margin: 0 auto;
+    }
+
+    /* Floating nav improvements */
+    .float-nav-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        bottom: 30px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+        background: #0a0c12;
+        border: 1px solid var(--neon-blue);
+        border-radius: 50%;
+        z-index: 1001;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    /* Full screen navigation adjustments */
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(10, 12, 18, 0.95); /* More opaque background */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+
+    nav.active {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .nav-links {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        padding: 0;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        position: relative;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    nav.active .nav-links {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Menu items with glass effect */
+    .nav-links a {
+        font-size: 1.1em;
+        padding: 15px 25px;
+        background: rgba(10, 12, 18, 0.6);
+        border: 1px solid rgba(0, 243, 255, 0.3);
+        border-radius: 25px;
+        margin: 0;
+        width: 80%;
+        text-align: center;
+        transform: translateX(50px);
+        opacity: 0;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        box-shadow: 
+            0 0 20px rgba(0, 243, 255, 0.2),
+            inset 0 0 10px rgba(0, 243, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    /* Active state for nav links */
+    nav.active .nav-links a {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    /* Stagger animation for menu items */
+    nav.active .nav-links a:nth-child(1) { transition-delay: 0.1s; }
+    nav.active .nav-links a:nth-child(2) { transition-delay: 0.2s; }
+    nav.active .nav-links a:nth-child(3) { transition-delay: 0.3s; }
+    nav.active .nav-links a:nth-child(4) { transition-delay: 0.4s; }
+    nav.active .nav-links a:nth-child(5) { transition-delay: 0.5s; }
+
+    /* Hover effect for nav links */
+    .nav-links a:hover {
+        background: rgba(0, 243, 255, 0.15);
+        border-color: rgba(0, 243, 255, 0.5);
+        box-shadow: 
+            0 0 30px rgba(0, 243, 255, 0.3),
+            inset 0 0 20px rgba(0, 243, 255, 0.2);
+        transform: scale(1.05);
+    }
+
+    /* Active link style */
+    .nav-links a.active {
+        background: rgba(0, 243, 255, 0.2);
+        border-color: rgba(0, 243, 255, 0.6);
+        box-shadow: 
+            0 0 35px rgba(0, 243, 255, 0.4),
+            inset 0 0 25px rgba(0, 243, 255, 0.3);
+    }
+
+    /* Icon and text styles in nav links */
+    .nav-links a i {
+        font-size: 1.2em;
+        color: rgba(0, 243, 255, 0.9);
+        text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+    }
+
+    .nav-links a span {
+        opacity: 1;
+        transform: none;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+        font-size: 1em;
+    }
+
+    /* Add ambient glow effect */
+    nav::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 200vw;
+        height: 200vh;
+        background: radial-gradient(
+            circle at center,
+            rgba(0, 243, 255, 0.1) 0%,
+            transparent 70%
+        );
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: -1;
+        animation: menuGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes menuGlow {
+        from {
+            opacity: 0.3;
+        }
+        to {
+            opacity: 0.6;
+        }
+    }
+}
+
+/* Add even smaller breakpoint for very small devices */
+@media (max-width: 360px) {
+    .hero-title {
+        font-size: 1.8em;
+    }
+
+    .typewriter {
+        font-size: 0.85em;
+        max-width: 260px;
+    }
+
+    .nav-links a {
+        padding: 12px 20px;
+        font-size: 0.9em;
+    }
+}
+
+/* Tablet/iPad styles (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    nav {
+        width: 80px;
+        transition: width 0.3s ease;
+    }
+
+    .nav-links a span {
+        opacity: 0;
+    }
+
+    nav:hover {
+        width: 250px;
+    }
+
+    nav:hover .nav-links a span {
+        opacity: 1;
+    }
+
+    /* Hide floating nav on tablets */
+    .float-nav-btn {
+        display: none;
+    }
+}
+
+/* Desktop styles (> 1024px) */
+@media (min-width: 1025px) {
+    nav {
+        width: 80px;
+        transition: width 0.3s ease;
+    }
+
+    .content-container {
+        margin-left: 80px; /* Match nav width */
+        width: calc(100% - 80px);
+    }
+
+    nav:hover {
+        width: 250px;
+    }
+
+    nav:hover + .content-container {
+        margin-left: 250px; /* Match expanded nav width */
+        width: calc(100% - 250px);
+    }
+}
+
+/* Tablet styles (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    nav {
+        width: 80px;
+        transition: width 0.3s ease;
+    }
+
+    .content-container {
+        margin-left: 80px;
+        width: calc(100% - 80px);
+    }
+
+    nav:hover {
+        width: 250px;
+    }
+
+    nav:hover + .content-container {
+        margin-left: 250px;
+        width: calc(100% - 250px);
+    }
+
+    /* Hide floating nav on tablets */
+    .float-nav-btn {
+        display: none;
+    }
+
+    /* Adjust section margins and padding */
+    section {
+        margin: 40px 20px;
+        padding: 60px 30px;
+    }
+
+    /* Ensure hero section spans full width */
+    .hero {
+        width: 100vw;
+        margin-left: -80px; /* Offset the nav margin */
+        transition: margin-left 0.3s ease;
+    }
+
+    nav:hover ~ .content-container .hero {
+        margin-left: -250px;
+    }
+}
+
+/* Mobile styles (up to 768px) */
+@media (max-width: 768px) {
+    .content-container {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .hero {
+        width: 100vw;
+        margin-left: 0;
+    }
+}
+
+/* Add styles for project status */
+.project-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    }
 } 

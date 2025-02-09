@@ -41,7 +41,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    window.addEventListener('scroll', updateActiveSection);
+    // Optimize scroll event handling
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        if (isMobile()) {
+            if (scrollTimeout) {
+                window.cancelAnimationFrame(scrollTimeout);
+            }
+            scrollTimeout = window.requestAnimationFrame(() => {
+                updateActiveSection();
+            });
+        } else {
+            updateActiveSection();
+        }
+    }, { passive: true });
 
     // Project cards hover effect
     const projectCards = document.querySelectorAll('.project-card');
@@ -109,29 +122,32 @@ document.addEventListener('DOMContentLoaded', () => {
         section.style.setProperty('--section-index', index);
     });
 
-    // Binary background effect
+    // Add this function to check if the device is mobile
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    // Update the binary background to be simpler on mobile
     function createBinaryBackground() {
         const container = document.querySelector('.binary-background');
-        if (!container) {
-            console.log('Binary background container not found');
-            return;
-        }
+        if (!container) return;
         
         // Clear existing content
         container.innerHTML = '';
         
-        const width = container.offsetWidth;
-        const numberOfElements = 150;
+        // Reduce number of elements on mobile
+        const numberOfElements = isMobile() ? 50 : 150;
         
         for (let i = 0; i < numberOfElements; i++) {
             const element = document.createElement('div');
             element.className = 'number-float';
             element.textContent = Math.random() < 0.5 ? '0' : '1';
             
-            const startX = Math.random() * width;
+            const startX = Math.random() * container.offsetWidth;
             element.style.left = `${startX}px`;
             
-            const duration = 10 + Math.random() * 15;
+            // Slower animation on mobile
+            const duration = isMobile() ? 15 + Math.random() * 10 : 10 + Math.random() * 15;
             const delay = Math.random() * -20;
             element.style.animationDuration = `${duration}s`;
             element.style.animationDelay = `${delay}s`;
@@ -140,18 +156,74 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initialize binary background
+    // Only initialize custom cursor on desktop
+    if (!isMobile()) {
+        initCustomCursor();
+    }
+
+    // Initialize binary background with mobile optimization
     createBinaryBackground();
     
-    // Recreate on window resize
-    window.addEventListener('resize', createBinaryBackground);
+    // Optimize resize handler
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        if (resizeTimeout) {
+            clearTimeout(resizeTimeout);
+        }
+        resizeTimeout = setTimeout(createBinaryBackground, 250);
+    });
 
-    // Add custom cursor functionality
-    initCustomCursor();
+    // Remove typewriter effect initialization
+    const title = document.querySelector('.hero-title');
+    if (title) {
+        title.style.opacity = '1';
+        title.style.transform = 'none';
+    }
 
-    createCodeBlockEffect();
+    // Update the mobile menu functionality
+    const floatNavBtn = document.querySelector('.float-nav-btn');
+    const nav = document.querySelector('nav');
+    const body = document.body;
 
-    initTypewriterEffect();
+    if (floatNavBtn && nav) {
+        // Toggle menu
+        floatNavBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            floatNavBtn.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        // Handle navigation links
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                // Close menu
+                floatNavBtn.classList.remove('active');
+                nav.classList.remove('active');
+
+                // Smooth scroll to section
+                if (targetSection) {
+                    setTimeout(() => {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (nav.classList.contains('active') && 
+                !nav.contains(e.target) && 
+                !floatNavBtn.contains(e.target)) {
+                floatNavBtn.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+    }
 });
 
 // Remove cursor trailer creation and event listener
@@ -243,83 +315,4 @@ function initCustomCursor() {
             });
         });
     });
-}
-
-function createCodeBlockEffect() {
-    const title = document.querySelector('.hero-title');
-    if (!title) return;
-
-    let lastBlockTime = 0;
-    const blockInterval = 50; // Time between blocks
-
-    title.addEventListener('mousemove', (e) => {
-        const currentTime = Date.now();
-        if (currentTime - lastBlockTime < blockInterval) return;
-        
-        lastBlockTime = currentTime;
-        const rect = title.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        createBlock(x, y);
-    });
-
-    function createBlock(x, y) {
-        const block = document.createElement('div');
-        block.className = 'code-block';
-        
-        // Random block size
-        const width = 30 + Math.random() * 40;
-        const height = 15 + Math.random() * 20;
-        
-        // Position block centered on cursor
-        block.style.width = `${width}px`;
-        block.style.height = `${height}px`;
-        block.style.left = `${x - width/2}px`;
-        block.style.top = `${y - height/2}px`;
-        
-        // Add random code-like content
-        const codeSnippets = [
-            '{ }', '( )', '[ ]', '< >', 
-            'if', 'for', 'var', 'let', 
-            'const', '=>', '=>', ';;'
-        ];
-        block.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-        block.style.color = 'rgba(0, 243, 255, 0.3)';
-        block.style.fontSize = '12px';
-        block.style.display = 'flex';
-        block.style.alignItems = 'center';
-        block.style.justifyContent = 'center';
-        
-        // Animation
-        block.style.animation = 'pressBlock 0.5s ease-out forwards';
-        
-        title.appendChild(block);
-        block.addEventListener('animationend', () => {
-            block.remove();
-        });
-    }
-}
-
-function initTypewriterEffect() {
-    const title = document.querySelector('.hero-title');
-    if (!title) return;
-
-    const text = title.textContent;
-    title.textContent = '';
-    title.dataset.text = text; // Store original text for glitch effect
-
-    let i = 0;
-    const typingDelay = 40; // Delay between each character
-    
-    function type() {
-        if (i < text.length) {
-            title.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, typingDelay + Math.random() * 50); // Add random variation
-        }
-    }
-
-    // Start typing with a small initial delay
-    setTimeout(type, 500);
 } 
