@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Soko | Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="noise"></div>
+    <nav>
+        <div class="logo">
+            <img src="LLK.jpg" alt="Benjamin Soko">
+        </div>
+        <div class="nav-links">
+            <a href="#home">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#about">
+                <i class="fas fa-user"></i>
+                <span>About</span>
+            </a>
+            <a href="#specialization">
+                <i class="fas fa-shield-alt"></i>
+                <span>Security</span>
+            </a>
+            <a href="#achievements">
+                <i class="fas fa-trophy"></i>
+                <span>Achievements</span>
+            </a>
+            <a href="#research">
+                <i class="fas fa-microscope"></i>
+                <span>Research</span>
+            </a>
+            <a href="#blog">
+                <i class="fas fa-pen-fancy"></i>
+                <span>Blog</span>
+            </a>
+            <a href="#contact">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="content-container">
+        <svg style="position: absolute; width: 0; height: 0;">
+            <filter id="liquid">
+                <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" />
+                <feDisplacementMap in="SourceGraphic" scale="20" />
+            </filter>
+        </svg>
+
+        <section id="home" class="hero">
+            <div class="binary-background"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Benjamin Soko</h1>
+                <p class="typewriter">Cybersecurity Enthusiast & Computer Science Student</p>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <h2 class="reveal">About Me</h2>
+            <div class="about-content reveal">
+                <div class="about-text">
+                    <p>Final year computer science student passionate about digital security, ethical hacking and developing secure applications. Currently focused on network security and cloud computing.</p>
+                    
+                    <div class="skills">
+                        <div class="skill-category">
+                            <h3>Technical Skills</h3>
+                            <div class="skill-items">
+                                <span>Java</span>
+                                <span>Python</span>
+                                <span>SQL</span>
+                                <span>PHP</span>
+                                <span>JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="specialization" class="specialization reveal">
+            <h2>Areas of Focus</h2>
+            <div class="about-content">
+                <div class="security-focus">
+                    <div class="skill-items">
+                        <span>Network Security</span>
+                        <span>Penetration Testing</span>
+                        <span>Cloud Security</span>
+                        <span>Mobile Applications</span>
+                        <span>Incident Response</span>
+                        <span>Security Analysis</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tools" class="security-tools reveal">
+            <h2>Security Tools & Technologies</h2>
+            <div class="tool-grid">
+                <div class="tool-item">Wireshark</div>
+                <div class="tool-item">Metasploit</div>
+                <div class="tool-item">Nmap</div>
+                <div class="tool-item">Kali Linux</div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects">
+            <h2 class="reveal">Security Projects</h2>
+            <div class="project-grid">
+                <div class="project-card reveal">
+                    <div class="project-content">
+                        <h3>Network Security Scanner</h3>
+                        <p>A comprehensive network scanning tool designed to identify vulnerabilities and potential security threats in network infrastructure.</p>
+                        <div class="tech-stack">
+                            <span>Java</span>
+                            <span>Kotlin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="research" class="research reveal">
+            <h2>Security Research</h2>
+            <div class="research-grid">
+                <div class="research-card">
+                    <h3>Vulnerability Analysis</h3>
+                    <p>Research on Common Web Application Vulnerabilities in Modern Frameworks</p>
+                    <div class="tags">
+                        <span>XSS</span>
+                        <span>CSRF</span>
+                        <span>SQL Injection</span>
+                    </div>
+                </div>
+                <div class="research-card">
+                    <h3>Network Security</h3>
+                    <p>Analysis of Zero-Day Exploit Prevention Techniques</p>
+                    <div class="tags">
+                        <span>IDS/IPS</span>
+                        <span>Zero-Day</span>
+                        <span>Prevention</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Get in Touch</h2>
+            <div class="contact-info">
+                <p>Phone: 0976690028</p>
+                <p>Email: bensoko8878@gmail.com</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
