@@ -1192,34 +1192,6 @@ section::after {
     transition: margin-left 0.3s ease;
 }
 
-/* Update cursor styles with trail effect */
-.cursor {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--neon-blue);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    mix-blend-mode: screen;
-    transition: transform 0.2s;
-    box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
-}
-
-.cursor-trail {
-    width: 6px;
-    height: 6px;
-    background: var(--neon-blue);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9998;
-    opacity: 0;
-    mix-blend-mode: screen;
-    box-shadow: 0 0 10px rgba(0, 243, 255, 0.8);
-    transition: opacity 0.3s ease;
-}
-
 /* Keep default cursor for mobile */
 @media (max-width: 768px) {
     * {
