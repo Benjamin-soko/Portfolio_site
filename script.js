@@ -231,26 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //     cursor.style.top = e.clientY + 'px';
 // });
 
-function initCustomCursor() {
-    const cursor = document.createElement('div');
-    cursor.classList.add('cursor');
-    document.body.appendChild(cursor);
 
-    // Create trail elements
-    const trails = [];
-    const numTrails = 8;  // Number of trail dots
-    
-    for (let i = 0; i < numTrails; i++) {
-        const trail = document.createElement('div');
-        trail.classList.add('cursor-trail');
-        document.body.appendChild(trail);
-        trails.push({
-            element: trail,
-            x: 0,
-            y: 0,
-            delay: i * 2  // Delay each trail dot
-        });
-    }
 
     let mouseX = 0;
     let mouseY = 0;
