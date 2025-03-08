@@ -156,11 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Only initialize custom cursor on desktop
-    if (!isMobile()) {
-        initCustomCursor();
-    }
-
     // Initialize binary background with mobile optimization
     createBinaryBackground();
     
